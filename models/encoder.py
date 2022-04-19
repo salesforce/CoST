@@ -145,23 +145,23 @@ class CoSTEncoder(nn.Module):
         if tcn_output:
             return x.transpose(1, 2)
 
-        local_multiscale = []
+        trend = []
         for idx, mod in enumerate(self.tfd):
             out = mod(x)  # b d t
             if self.kernels[idx] != 1:
                 out = out[..., :-(self.kernels[idx] - 1)]
-            local_multiscale.append(out.transpose(1, 2))  # b t d
-        local_multiscale = reduce(
-            rearrange(local_multiscale, 'list b t d -> list b t d'),
+            trend.append(out.transpose(1, 2))  # b t d
+        trend = reduce(
+            rearrange(trend, 'list b t d -> list b t d'),
             'list b t d -> b t d', 'mean'
         )
 
         x = x.transpose(1, 2)  # B x T x Co
 
-        global_multiscale = []
+        season = []
         for mod in self.sfd:
             out = mod(x)  # b t d
-            global_multiscale.append(out)
-        global_multiscale = global_multiscale[0]
+            season.append(out)
+        season = season[0]
 
-        return local_multiscale, self.repr_dropout(global_multiscale)
+        return trend, self.repr_dropout(season)
