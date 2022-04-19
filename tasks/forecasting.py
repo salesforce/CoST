@@ -20,9 +20,7 @@ def cal_metrics(pred, target):
     }
 
 
-def eval_forecasting(model, data, train_slice, valid_slice, test_slice, scaler, pred_lens, n_covariate_cols):
-    padding = 200
-    
+def eval_forecasting(model, data, train_slice, valid_slice, test_slice, scaler, pred_lens, n_covariate_cols, padding):
     t = time.time()
 
     all_repr = model.encode(
