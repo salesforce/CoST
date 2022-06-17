@@ -292,8 +292,6 @@ class CoST:
                 if self.max_train_length is not None and x_q.size(1) > self.max_train_length:
                     window_offset = np.random.randint(x_q.size(1) - self.max_train_length + 1)
                     x_q = x_q[:, window_offset : window_offset + self.max_train_length]
-                if self.max_train_length is not None and x_k.size(1) > self.max_train_length:
-                    window_offset = np.random.randint(x_k.size(1) - self.max_train_length + 1)
                     x_k = x_k[:, window_offset : window_offset + self.max_train_length]
 
                 optimizer.zero_grad()
