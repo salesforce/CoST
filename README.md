@@ -1,6 +1,10 @@
 # CoST: Contrastive Learning of Disentangled Seasonal-Trend Representations for Time Series Forecasting (ICLR 2022)
 
-<img src="pics/CoST.png" width="700">
+<p align="center">
+<img src=".\pics\CoST.png" width = "700" alt="" align=center />
+<br><br>
+<b>Figure 1.</b> Overall CoST Architecture.
+</p>
 
 Official PyTorch code repository for the [CoST paper](https://openreview.net/forum?id=PilZY3omXV2).
 
@@ -49,7 +53,9 @@ We perform experiments on five real-world public benchmark datasets, comparing a
 CoST achieves state-of-the-art performance, beating the best performing end-to-end forecasting approach by 39.3% and 18.22% (MSE) in the multivariate and univariate settings
 respectively. CoST also beats next best performing feature-based approach by 21.3% and 4.71% (MSE) in the multivariate and univariate settings respectively (refer to main paper for full results).
 
-<img src="pics/results.png" width="700">
+<p align="center">
+<img src=".\pics\results.png" width = "700" alt="" align=center />
+</p>
 
 ## FAQs
 **Q**: ValueError: Found array with dim 4. StandardScaler expected <= 2.
