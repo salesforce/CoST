@@ -1,11 +1,15 @@
-# CoST: Contrastive Learning of Disentangled Seasonal-Trend Representations for Time Series Forecasting
+# CoST: Contrastive Learning of Disentangled Seasonal-Trend Representations for Time Series Forecasting (ICLR 2022)
 
 <img src="pics/CoST.png" width="700">
 
-Official PyTorch code repository for the [CoST paper](https://openreview.net/forum?id=PilZY3omXV2). Required dependencies can be installed by:
-```bash
-pip install -r requirements.txt
-```
+Official PyTorch code repository for the [CoST paper](https://openreview.net/forum?id=PilZY3omXV2).
+
+* CoST is a contrastive learning method for learning disentangled seasonal-trend representations for time series forecasting.
+* CoST consistently outperforms state-of-the-art methods by a considerable margin, achieveing a 21.3% improvement in MSE on multivariate benchmarks.
+  
+## Requirements
+1. Install Python 3.8, and the required dependencies.
+2. Required dependencies can be installed by: ```pip install -r requirements.txt```
 
 ## Data
 
@@ -17,9 +21,11 @@ The datasets can be obtained and put into `datasets/` folder in the following wa
 * [M5 dataset](https://drive.google.com/drive/folders/1D6EWdVSaOtrP1LEFh1REjI3vej6iUS_4) place `calendar.csv`, `sales_train_validation.csv`, `sales_train_evaluation.csv`, `sales_test_validation.csv` and `sales_test_evaluation.csv` at `datasets/` and run m5.py.
 
 ## Usage
+To train and evaluate CoST on a dataset, run the script from the scripts folder: ```./scripts/ETT_CoST.sh``` (edit file permissions via ```chmod u+x scripts/*```).
 
-To train and evaluate CoST on a dataset, run the following command:
+After training and evaluation, the trained encoder, output and evaluation metrics can be found in `training/<DatasetName>/<RunName>_<Date>_<Time>/`.
 
+Alternatively, you can directly run the python scripts:
 ```train & evaluate
 python train.py <dataset_name> <run_name> --archive <archive> --batch-size <batch_size> --repr-dims <repr_dims> --gpu <gpu> --eval
 ```
@@ -38,9 +44,12 @@ The detailed descriptions about the arguments are as following:
 
 (For descriptions of more arguments, run `python train.py -h`.)
 
-After training and evaluation, the trained encoder, output and evaluation metrics can be found in `training/<DatasetName>/<RunName>_<Date>_<Time>/`. 
+## Main Results
+We perform experiments on five real-world public benchmark datasets, comparing against both state-of-the-art representation learning and end-to-end forecasting approaches. 
+CoST achieves state-of-the-art performance, beating the best performing end-to-end forecasting approach by 39.3% and 18.22% (MSE) in the multivariate and univariate settings
+respectively. CoST also beats next best performing feature-based approach by 21.3% and 4.71% (MSE) in the multivariate and univariate settings respectively (refer to main paper for full results).
 
-**Scripts:** The scripts for reproduction are provided in `scripts/` folder.
+<img src="pics/results.png" width="700">
 
 ## FAQs
 **Q**: ValueError: Found array with dim 4. StandardScaler expected <= 2.
