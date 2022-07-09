@@ -40,8 +40,8 @@ if __name__ == '__main__':
     parser.add_argument('--max-threads', type=int, default=None, help='The maximum allowed number of threads used by this process')
     parser.add_argument('--eval', action="store_true", help='Whether to perform evaluation after training')
 
-    parser.add_argument('--kernels', type=int, nargs='+', default=None)
-    parser.add_argument('--alpha', type=float, default=0.0005)
+    parser.add_argument('--kernels', type=int, nargs='+', default=[1, 2, 4, 8, 16, 32, 64, 128], help='The kernel sizes used in the mixture of AR expert layers')
+    parser.add_argument('--alpha', type=float, default=0.0005, help='Weighting hyperparameter for loss function')
 
     args = parser.parse_args()
 

@@ -62,6 +62,10 @@ respectively. CoST also beats next best performing feature-based approach by 21.
 
 **A**: Please install the appropriate package requirements as found in ```requirements.txt```, in particular, ```scikit_learn==0.24.1```.
 
+**Q**: How to set the ``--kernels`` parameter?
+
+**A**: It should be list of space separated integers, e.g. ```--kernels 1 2 4```. See the `scripts` folder for further examples.
+
 ## Acknowledgements
 The implementation of CoST relies on resources from the following codebases and repositories, we thank the original authors for open-sourcing their work.
 * https://github.com/yuezhihan/ts2vec
