@@ -39,7 +39,7 @@ class ConvBlock(nn.Module):
         return x + residual
 
 
-class DilatedConvEncoder(nn.Module):
+class DilatedConvEncoder(nn.Module):    # 空洞卷积
     def __init__(self, in_channels, channels, kernel_size, extract_layers=None):
         super().__init__()
 

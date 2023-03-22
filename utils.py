@@ -6,7 +6,7 @@ import random
 from datetime import datetime
 import torch.nn as nn
 
-
+# 将Python对象（如列表、字典等）保存为.pkl文件的函数
 def pkl_save(name, var):
     with open(name, 'wb') as f:
         pickle.dump(var, f)
