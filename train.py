@@ -74,7 +74,7 @@ if __name__ == '__main__':
         lr=args.lr,
         output_dims=args.repr_dims,
     )
-    
+
     if args.save_every is not None:
         unit = 'epoch' if args.epochs is not None else 'iter'
         config[f'after_{unit}_callback'] = save_checkpoint_callback(args.save_every, unit)

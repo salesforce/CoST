@@ -418,7 +418,7 @@ class CoST:
                 output.append(out)
                 
             output = torch.cat(output, dim=0)
-
+            print(output.shape)
         self.net.train(org_training)
         return output.numpy()
     

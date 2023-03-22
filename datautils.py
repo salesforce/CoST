@@ -32,8 +32,11 @@ def _get_time_features(dt):
 
 def load_forecast_csv(name, univar=False):
     data = pd.read_csv(f'datasets/{name}.csv', index_col='date', parse_dates=True)
+    # 生成时间嵌入特征，即将时间信息转化为可供模型使用的数值特征
+    # 并且得到时间嵌入特征的数量
     dt_embed = _get_time_features(data.index)
     n_covariate_cols = dt_embed.shape[-1]
+    # n_covariate_cols = 1
     
     if univar:
         if name in ('ETTh1', 'ETTh2', 'ETTm1', 'ETTm2'):
@@ -42,10 +45,16 @@ def load_forecast_csv(name, univar=False):
             data = data[['MT_001']]
         elif name == 'WTH':
             data = data[['WetBulbCelsius']]
+        elif name == 'udds':
+            data = data[['CH5002']]
+            print(np.array(data).shape)
         else:
             data = data.iloc[:, -1:]
 
+
+
     data = data.to_numpy()
+    print('ok')
     if name == 'ETTh1' or name == 'ETTh2':
         train_slice = slice(None, 12 * 30 * 24)
         valid_slice = slice(12 * 30 * 24, 16 * 30 * 24)
@@ -58,6 +67,10 @@ def load_forecast_csv(name, univar=False):
         train_slice = slice(None, int(0.8 * (1913 + 28)))
         valid_slice = slice(int(0.8 * (1913 + 28)), 1913 + 28)
         test_slice = slice(1913 + 28 - 1, 1913 + 2 * 28)
+    elif name.startswith('udds'):
+        train_slice = slice(None, int(0.8 * (4800 + 50)))
+        valid_slice = slice(int(0.8 * (4800 + 50)), 4800 + 50)
+        test_slice = slice(4800 + 50 - 1, 5000)
     else:
         train_slice = slice(None, int(0.6 * len(data)))
         valid_slice = slice(int(0.6 * len(data)), int(0.8 * len(data)))
@@ -70,12 +83,13 @@ def load_forecast_csv(name, univar=False):
     else:
         data = np.expand_dims(data, 0)
 
+    # 时间戳数据归一化并与其他数据拼接
     if n_covariate_cols > 0:
         dt_scaler = StandardScaler().fit(dt_embed[train_slice])
         dt_embed = np.expand_dims(dt_scaler.transform(dt_embed), 0)
         data = np.concatenate([np.repeat(dt_embed, data.shape[0], axis=0), data], axis=-1)
 
-    if name in ('ETTh1', 'ETTh2', 'electricity', 'WTH'):
+    if name in ('ETTh1', 'ETTh2', 'electricity', 'WTH', 'udds'):
         pred_lens = [24, 48, 168, 336, 720]
     elif name.startswith('M5'):
         pred_lens = [28]
